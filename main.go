@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"os/exec"
 	"syscall"
+
+	"bey.com/routes"
 )
 
 func openBrowser() {
@@ -13,8 +15,8 @@ func openBrowser() {
 }
 
 func main() {
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/list", listHandler)
+	http.HandleFunc("/", routes.HomeHandler)
+	http.HandleFunc("/list", routes.ListHandler)
 	go openBrowser()
 	http.ListenAndServe(":3000", nil)
 }
