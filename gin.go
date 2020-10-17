@@ -1,11 +1,22 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"os/exec"
+	"syscall"
+
+	"github.com/gin-gonic/gin"
+)
 
 type person struct {
 	id   string
 	name string
 	age  int
+}
+
+func openBrowser() {
+	cmd := exec.Command(`cmd`, `/c`, `start`, `http://localhost:3000`)
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	cmd.Start()
 }
 
 func main() {
@@ -26,5 +37,7 @@ func main() {
 			},
 		})
 	})
-	r.Run()
+	go openBrowser()
+	r.Run(":3000")
+
 }
