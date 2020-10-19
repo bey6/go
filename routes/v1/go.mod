@@ -1,4 +1,4 @@
-module secretary.com/routes/v1
+module secretary/routes/v1
 
 go 1.15
 

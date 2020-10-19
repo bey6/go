@@ -1,4 +1,4 @@
-module gin
+module secretary
 
 go 1.15
 

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"net/http"
 	"os/exec"
 	"syscall"
 
@@ -21,13 +23,32 @@ func openBrowser() {
 
 func main() {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-			"code":    200,
+	r.LoadHTMLGlob("./templates/*")
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"title": "Main website",
 		})
 	})
-	r.POST("/cat", func(c *gin.Context) {
+	r.GET("/login", func(c *gin.Context) {
+		name := c.Query("username")
+		pwd := c.Query("password")
+		fmt.Println(name, pwd)
+		if name == "guozb" && pwd == "123456" {
+			c.JSON(200, gin.H{
+				"code":    200,
+				"data":    true,
+				"message": "✔️ 登录成功",
+			})
+		} else {
+			c.JSON(200, gin.H{
+				"code":    200,
+				"data":    false,
+				"message": "账户名或密码错误",
+			})
+		}
+
+	})
+	r.GET("/cat", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"code": 200,
 			"msg":  "ooooooh",
